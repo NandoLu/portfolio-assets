@@ -1,0 +1,26 @@
+name: Generate GitHub Streak Image
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Executa uma vez por dia à meia-noite
+  workflow_dispatch:
+
+jobs:
+  generate-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Get GitHub Streak Stats
+      run: |
+        curl "https://github-readme-streak-stats.herokuapp.com/?user=NandoLu&theme=tokyonight" > streak-stats.svg
+    
+    - name: Commit and Push
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add streak-stats.svg
+        git commit -m "Update streak stats" || true
+        git push
