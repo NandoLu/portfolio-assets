@@ -17,6 +17,7 @@ jobs:
 
     - name: Get GitHub Contributions Chart
       run: |
+        curl "https://github-contributions.vercel.app/api/v1/NandoLu" > contributions.svg
         curl "https://github-readme-stats.vercel.app/api/top-langs/?username=NandoLu&theme=tokyonight&layout=compact" > top-langs.svg
         curl "https://github-readme-stats.vercel.app/api/wakatime?username=NandoLu&theme=tokyonight&layout=compact" > wakatime.svg
         curl "https://github-readme-stats.vercel.app/api/pin?username=NandoLu&repo=portfolio-assets&theme=tokyonight" > pin.svg
@@ -26,6 +27,8 @@ jobs:
         
         # Este comando irá imprimir o conteúdo do arquivo para debug
         cat streak-stats.svg
+        cat commits.svg
+        cat contributions.svg
     
     - name: Commit and Push
       run: |
