@@ -20,13 +20,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           user: 'NandoLu'
-          template: 'classic'
-          base: ''
-          filename: 'metrics.svg'
-          # Habilita o plugin de isocalendário, que gera o gráfico de contribuições
+          template: 'repository' # Este template foca em dados do repositório
+          base: '' # Nenhuma base de métricas
           plugin_isocalendar: 'yes'
           plugin_isocalendar_duration: 'full-year'
-          plugin_isocalendar_mode: 'daily' # Certifica que será o calendário
+          plugin_isocalendar_mode: 'daily'
+          output_image: 'metrics.svg' # Define o nome de saída
 
       - name: Commit and Push
         run: |
