@@ -1,37 +1,24 @@
-name: Generate GitHub Contributions Image
+name: Generate GitHub Contributions Grid
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Executa uma vez por dia à meia-noite
+    - cron: '0 0 * * *' # Executa diariamente à meia-noite
   workflow_dispatch:
 
 jobs:
-  generate-image:
+  generate-grid:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
-      - name: Generate GitHub Contributions Image
-        uses: lowlighter/metrics@latest
+      - name: Generate contributions image
+        uses: Platane/github-contributions-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          user: 'NandoLu'
-          template: 'repository' # Este template foca em dados do repositório
-          base: '' # Nenhuma base de métricas
-          plugin_isocalendar: 'yes'
-          plugin_isocalendar_duration: 'full-year'
-          plugin_isocalendar_mode: 'daily'
-          output_image: 'metrics.svg' # Define o nome de saída
+          username: NandoLu
+          output: contributions.svg
 
-      - name: Commit and Push
+      - name: Commit and push
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add metrics.svg
-          git pull --rebase origin main
-          git commit -m "Update contributions chart" || true
+          git add contributions.svg
+          git commit -m "Atualiza imagem de contribuições"
           git push
