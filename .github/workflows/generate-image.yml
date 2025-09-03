@@ -15,18 +15,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Generate GitHub Contributions Chart (2D)
-        uses: lowlighter/metrics@latest
-        with:
-          filename: contributions.svg
-          token: ${{ secrets.GH_TOKEN }}
-          user: NandoLu
-          template: classic
-          base: ""
-          config_timezone: America/Sao_Paulo
-          committer_message: "Update contributions chart"
-          
-          # Plugin para o calendário de contribuições 2D
-          plugin_isocalendar: yes
-          plugin_isocalendar_duration: full-year
-          plugin_isocalendar_transform: 2d
+      - name: Get GitHub Contributions Chart
+        run: |
+          curl "https://gh-contributions.vercel.app/NandoLu.svg" > contributions.svg
+      
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add contributions.svg
+          git pull --rebase origin main
+          git commit -m "Update contributions chart" || true
+          git push
