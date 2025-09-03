@@ -9,7 +9,7 @@ jobs:
   generate-image:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # <--- Adicione esta linha
+      contents: write
 
     steps:
     - name: Checkout repository
@@ -17,12 +17,20 @@ jobs:
 
     - name: Get GitHub Contributions Chart
       run: |
-        curl "https://github-profile-summary-cards.vercel.app/api/cards/profile?username=NandoLu&theme=tokyonight" > contributions-chart.svg
+        curl "https://github-readme-stats.vercel.app/api/top-langs/?username=NandoLu&theme=tokyonight&layout=compact" > top-langs.svg
+        curl "https://github-readme-stats.vercel.app/api/wakatime?username=NandoLu&theme=tokyonight&layout=compact" > wakatime.svg
+        curl "https://github-readme-stats.vercel.app/api/pin?username=NandoLu&repo=portfolio-assets&theme=tokyonight" > pin.svg
+        curl "https://github-readme-stats.vercel.app/api?username=NandoLu&theme=tokyonight&show_icons=true" > stats.svg
+        curl "https://github-readme-stats.vercel.app/api/commits?username=NandoLu&theme=tokyonight" > commits.svg
+        curl "https://github-readme-streak-stats.herokuapp.com/?user=NandoLu&theme=tokyonight" > streak-stats.svg
+        
+        # Este comando irá imprimir o conteúdo do arquivo para debug
+        cat streak-stats.svg
     
     - name: Commit and Push
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add contributions-chart.svg
-        git commit -m "Update contributions chart" || true
+        git add .
+        git commit -m "Update GitHub Stats" || true
         git push
