@@ -2,7 +2,7 @@ name: Generate GitHub Contributions Image
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *' # Executa uma vez por dia à meia-noite
   workflow_dispatch:
 
 jobs:
@@ -14,23 +14,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
+      
       - name: Generate GitHub Contributions Image
-        uses: lowlighter/metrics@latest
+        uses: Platane/github-contributions-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          user: 'NandoLu'
-          template: 'classic'
-          base: 'header, activity, community, repositories, metadata'
-          filename: 'contributions.svg'
-          plugin_isocalendar: 'yes'
-          plugin_isocalendar_duration: 'full-year'
+          output_image_path: 'contributions.png'
+          username: 'NandoLu'
+          # Use o tema que se aproxima mais da imagem que você quer
+          theme: 'dark_dimmed'
 
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add contributions.svg
-          git pull --rebase origin main # Adicionei este comando para evitar conflitos
+          git add contributions.png
+          git pull --rebase origin main
           git commit -m "Update contributions chart" || true
           git push
