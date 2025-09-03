@@ -2,7 +2,7 @@ name: Generate GitHub Contributions Image
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Executa uma vez por dia à meia-noite
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
@@ -20,15 +20,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           output_image_path: 'contributions.png'
-          username: 'NandoLu' # Substitua 'NandoLu' pelo seu nome de usuário do GitHub
-          # Para um tema escuro como na imagem, você pode adicionar:
-          # theme: 'dark_dimmed' # Ou 'dark_high_contrast', 'dark_tritanopia' etc.
-          # Para mais opções de tema, consulte a documentação da ação.
+          username: 'NandoLu'
 
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.email 'github-actions@users.noreply.github.com'
           git add contributions.png
           git pull --rebase origin main
           git commit -m "Update contributions chart" || true
