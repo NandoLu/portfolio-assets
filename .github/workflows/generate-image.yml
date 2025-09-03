@@ -2,31 +2,31 @@ name: Generate GitHub Contributions Image
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Executa uma vez por dia à meia-noite
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
   workflow_dispatch:
 
 jobs:
-  build:
+  generate-image:
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Generate contributions.svg
-        uses: Meldiron/github-contributions-calendar@master
+        uses: actions/checkout@v4
+      
+      - name: Generate GitHub Contributions Chart (2D)
+        uses: lowlighter/metrics@latest
         with:
-          user: 'NandoLu'
-          output: 'contributions.svg'
-          # Você pode adicionar um tema aqui se quiser, como
-          # theme: 'dark'
-
-      - name: Commit and Push
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add contributions.svg
-          git commit -m "chore: Update contributions.svg" || true
-          git push
+          filename: contributions.svg
+          token: ${{ secrets.GH_TOKEN }}
+          user: NandoLu
+          template: classic
+          base: ""
+          config_timezone: America/Sao_Paulo
+          committer_message: "Update contributions chart"
+          
+          # Plugin para o calendário de contribuições 2D
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+          plugin_isocalendar_transform: 2d # <-- A configuração para o gráfico 2D
