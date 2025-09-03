@@ -2,7 +2,7 @@ name: Generate GitHub Contributions Image
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
+    - cron: '0 0 * * *' # Executa uma vez por dia à meia-noite
   workflow_dispatch:
 
 jobs:
@@ -15,18 +15,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Generate GitHub Contributions Chart (2D)
-        uses: lowlighter/metrics@latest
-        with:
-          filename: contributions.svg
-          token: ${{ secrets.GH_TOKEN }}
-          user: NandoLu
-          template: classic
-          base: ""
-          config_timezone: America/Sao_Paulo
-          committer_message: "Update contributions chart"
-          
-          # Plugin para o calendário de contribuições 2D
-          plugin_isocalendar: yes
-          plugin_isocalendar_duration: full-year
-          plugin_isocalendar_transform: 2d # <-- A configuração para o gráfico 2D
+      - name: Get GitHub Contributions Chart
+        run: |
+          curl "https://github-contribution-calendar.herokuapp.com/NandoLu.svg" > contributions.svg
+      
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add contributions.svg
+          git commit -m "Update contributions chart" || true
+          git push
