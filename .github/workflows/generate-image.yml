@@ -17,7 +17,7 @@ jobs:
 
     - name: Get GitHub Contributions Chart
       run: |
-        curl "https://github-contributions.vercel.app/api/v1/NandoLu?theme=tokyonight" > contributions.svg
+        curl "https://github-contributions-svg.vercel.app/?username=NandoLu&theme=tokyonight" > contributions.svg
     
     - name: Commit and Push
       run: |
