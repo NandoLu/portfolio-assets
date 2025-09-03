@@ -12,17 +12,17 @@ jobs:
       contents: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Get GitHub Contributions Chart
-      run: |
-        curl "https://gh-profile-stats-and-cards.vercel.app/api/contribs?user=NandoLu&mode=year" > contributions.svg
-    
-    - name: Commit and Push
-      run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
-        git add contributions.svg
-        git commit -m "Update contributions chart" || true
-        git push
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Generate GitHub Contributions Chart
+        uses: lowlighter/metrics@latest
+        with:
+          filename: contributions.svg
+          token: ${{ secrets.GH_TOKEN }}
+          base: ""
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+          template: classic
+          config_timezone: America/Sao_Paulo
+          committer_message: "Update contributions chart"
