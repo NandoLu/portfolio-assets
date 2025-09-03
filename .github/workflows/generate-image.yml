@@ -1,28 +1,14 @@
-name: Generate GitHub Contributions Image
+name: Debug GitHub Contributions Image
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Executa uma vez por dia à meia-noite
   workflow_dispatch:
 
 jobs:
-  generate-image:
+  debug-image:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
+    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
     - name: Get GitHub Contributions Chart
       run: |
         curl "https://github-contributions-svg.vercel.app/?username=NandoLu&theme=tokyonight" > contributions.svg
-    
-    - name: Commit and Push
-      run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
-        git add contributions.svg
-        git commit -m "Update contributions chart" || true
-        git push
+        cat contributions.svg
