@@ -8,6 +8,8 @@ on:
 jobs:
   generate-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # <--- Adicione esta linha
 
     steps:
     - name: Checkout repository
