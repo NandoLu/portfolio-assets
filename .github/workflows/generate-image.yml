@@ -14,16 +14,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Get GitHub Contributions Chart
-        run: |
-          curl "https://gh-contributions.vercel.app/NandoLu.svg" > contributions.svg
-      
+
+      - name: Generate GitHub Contributions Image
+        uses: Platane/github-contributions-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output_image_path: 'contributions.png'
+          username: 'NandoLu' # Substitua 'NandoLu' pelo seu nome de usuário do GitHub
+          # Para um tema escuro como na imagem, você pode adicionar:
+          # theme: 'dark_dimmed' # Ou 'dark_high_contrast', 'dark_tritanopia' etc.
+          # Para mais opções de tema, consulte a documentação da ação.
+
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add contributions.svg
+          git add contributions.png
           git pull --rebase origin main
           git commit -m "Update contributions chart" || true
           git push
