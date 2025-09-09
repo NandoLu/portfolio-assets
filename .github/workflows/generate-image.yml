@@ -24,6 +24,7 @@ jobs:
           base: ''
           plugin_isocalendar: 'yes'
           plugin_isocalendar_duration: 'full-year'
+          plugin_isocalendar_duration_flat: yes # Adicionada para gerar o gráfico 2D plano
           template: classic
 
       - name: Commit and Push
