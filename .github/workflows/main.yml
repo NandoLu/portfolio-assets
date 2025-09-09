@@ -1,0 +1,8 @@
+- name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add github-contributions-calendar.svg
+          git pull --rebase origin main
+          git commit -m "Update contributions chart" || true
+          git push
