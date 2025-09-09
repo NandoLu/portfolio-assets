@@ -2,7 +2,7 @@ name: Generate GitHub Contributions Image
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Executa uma vez por dia à meia-noite
+    - cron: '0 0 * * *' # Runs once every day at midnight
   workflow_dispatch:
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
           base: ''
           plugin_isocalendar: 'yes'
           plugin_isocalendar_duration: 'full-year'
-          plugin_isocalendar_duration_flat: yes # Adicionada para gerar o gráfico 2D plano
+          plugin_isoman: 'no'
           template: classic
 
       - name: Commit and Push
