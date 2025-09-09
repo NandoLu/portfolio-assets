@@ -26,6 +26,10 @@ jobs:
           plugin_isocalendar_duration: 'full-year'
           template: classic
 
+      # Adicionando esta etapa para depuração
+      - name: Check for generated file
+        run: ls -R
+
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions'
