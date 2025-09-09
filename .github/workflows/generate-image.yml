@@ -14,23 +14,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Generate GitHub Contributions Image
         uses: lowlighter/metrics@latest
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           user: 'NandoLu'
-          template: 'classic' # Use o template clássico para perfis de usuário
-          base: '' # Nenhuma base de métricas
-          filename: 'metrics.svg'
+          filename: 'github-contributions-calendar.svg'
+          base: ''
           plugin_isocalendar: 'yes'
           plugin_isocalendar_duration: 'full-year'
+          template: classic
 
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add metrics.svg
-          git pull --rebase origin main
+          git add github-contributions-calendar.svg
           git commit -m "Update contributions chart" || true
           git push
