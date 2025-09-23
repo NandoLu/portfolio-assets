@@ -1,4 +1,4 @@
-name: Generate GitHub Contributions Image
+name: Generate GitHub
 
 on:
 schedule:
