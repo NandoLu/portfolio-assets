@@ -1,4 +1,4 @@
-name: Generate Image
+name: Generate GitHub Contributions Image
 
 on:
   schedule:
@@ -20,11 +20,11 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           user: 'NandoLu'
-          filename: 'github-contributions.svg'
+          filename: 'github-contributions-calendar.svg'
           base: ''
           plugin_isocalendar: 'yes'
           plugin_isocalendar_duration: 'full-year'
-          plugin_isocalendar_mode: 'normal'
+          plugin_isocalendar_mode: 'normal' # Força o modo 2D
           template: classic
           plugin_isocalendar_start: '2025'
           plugin_isocalendar_end: '2025'
